@@ -1,0 +1,83 @@
+/* Full page gradient background */
+.body-home {
+    background: linear-gradient(to bottom, #c3c1da, #1b0b5a);
+    height: 100vh;
+    margin: 0;
+}
+
+/* Main content */
+.main-content {
+    display: flex; /* Center content */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%; /* Take up the remaining height */
+}
+
+/* Home Page Heading */
+.sleek-heading {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700; /* Bold weight */
+    font-size: 5rem; /* Larger font size */
+    letter-spacing: 1px; /* Slightly increased letter spacing */
+    color: #ffffff;
+    text-shadow: 0px 2px 4px rgba(2, 6, 64, 0.854); /* Subtle shadow */
+    margin: 0; /* Remove default margins */
+}
+
+/* Home Page Text */
+.main-page-text {
+    font-size: 25px;
+    color: #201f1f; 
+}
+
+/* Cookie image in Home Page Header */
+.cookie-in-heading img{
+    width: 100px;
+    height: auto;
+    max-width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Login Button */
+.btn-login-home {
+    background-color: #1b0b5a;
+    color: #dadada; 
+    padding: 12px 30px; /* Adjust padding*/
+    font-size: 1.1rem;
+    border-radius: 30px; /* Rounded corners */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.btn-login-page {
+    background-color: #1b0b5a;
+    color: #dadada; 
+    padding: 12px 30px; /* Adjust padding*/
+    font-size: 1.1rem;
+    border-radius: 30px; /* Rounded corners */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-login-home:hover {
+    background-color:#23135f;
+    color: #a2a19c;
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+.btn-login-page:hover {
+    background-color:#23135f;
+    color: #a2a19c;
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+/* Cookie image in NavBar */
+.cookie-logo img {
+    width: 30px;
+    height: auto;
+    max-width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
