@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 service = Service(executable_path="./chromedriver")
 driver = webdriver.Chrome(service=service)
 k = 0
+
 # Base URL for the recipe collection
 base_url = "https://www.bbcgoodfood.com/recipes/collection/quick-and-easy-family-recipes?page="
 
@@ -43,14 +44,15 @@ for recipe_link in all_recipe_links:
     
     driver.get(recipe_link)
     
-    # # Get the page source after switching tabs
+    # Get the page source after switching tabs
     recipe_html = driver.page_source
     soup = BeautifulSoup(recipe_html, 'html.parser')
     
     # Extract the recipe title
     title_tag = soup.find('h1', class_='heading-1')
     title = title_tag.text.strip() if title_tag else "No title found"
-   # Extract the ingredients
+    
+    # Extract the ingredients
     ingredients_section = soup.find('ul', class_='ingredients-list list')
     if ingredients_section:
         # Extract all list items (<li>) inside the ingredients list
@@ -63,57 +65,72 @@ for recipe_link in all_recipe_links:
     print("Ingredients:")
     for ingredient in ingredients:
         print(f"- {ingredient}")
-    html_content = """
-            <picture class="image__picture" width="440" height="399.52000000000004">
-            <source type="image/webp" sizes="(min-width: 768px) 300px,(min-width: 544px) 556px,calc(100vw - 20px)" srcset="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/butter-bean-chorizo-stew-c630c75.jpg?quality=90&amp;webp=true&amp;resize=300,272 300w,https://images.immediate.co.uk/production/volatile/sites/30/2020/08/butter-bean-chorizo-stew-c630c75.jpg?quality=90&amp;webp=true&amp;resize=375,341 375w,https://images.immediate.co.uk/production/volatile/sites/30/2020/08/butter-bean-chorizo-stew-c630c75.jpg?quality=90&amp;webp=true&amp;resize=440,400 440w">
-            <source sizes="(min-width: 768px) 300px,(min-width: 544px) 556px,calc(100vw - 20px)" srcset="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/butter-bean-chorizo-stew-c630c75.jpg?quality=90&amp;resize=300,272 300w,https://images.immediate.co.uk/production/volatile/sites/30/2020/08/butter-bean-chorizo-stew-c630c75.jpg?quality=90&amp;resize=375,341 375w,https://images.immediate.co.uk/production/volatile/sites/30/2020/08/butter-bean-chorizo-stew-c630c75.jpg?quality=90&amp;resize=440,400 440w">
-            <img class="image__img" src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/butter-bean-chorizo-stew-c630c75.jpg?quality=90&amp;resize=440,400" alt="Butter bean &amp; chorizo stew" data-item-name="Butter bean &amp; chorizo stew" title="Butter bean &amp; chorizo stew" style="aspect-ratio:1 / 0.908;object-fit:cover" loading="eager" width="440" height="399.52000000000004">
-            </picture>
-            """
 
+    # Check for the presence of the Method section
+    method_section = driver.find_elements(By.XPATH, "//h2[text()='Method']")
+    if not method_section:
+        print("No method steps found, skipping this recipe.")
+        continue  # Skip to the next recipe if "Method" is not found
 
+    # Wait for the "Method" section to be present
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'method-steps__heading')))
+    
+    # Find the entire "Method" section starting from the heading
+    method_section = driver.find_element(By.XPATH, "//h2[text()='Method']/following-sibling::ul")
+    
+    # Get the page source and parse it with BeautifulSoup
+    soup3 = BeautifulSoup(driver.page_source, 'html.parser')
 
-    # Find the <img> tag with the 'class' attribute containing 'image__img'
-    img_tag = soup.find('img', class_='image__img')
+    # Find all list items (steps) under the "Method" section
+    steps_list = soup3.find_all('li', class_='method-steps__list-item')
 
-# Extract the 'src' attribute
-    if img_tag:
-        image_url = img_tag['src']
-        print(f"Image URL: {image_url}")
-    else:
-        print("No image URL found.")
+    # Extract and print each step
+    print("Recipe Steps:")
+    for step in steps_list:
+        step_heading = step.find('h3', class_='method-steps__item-heading')
+        step_text = step.find('div', class_='editor-content')
+    
+        # Extract step number (step 1, step 2, etc.)
+        step_number = step_heading.text.strip() if step_heading else "No step number found"
+    
+        # Extract step instructions (if available)
+        instructions = step_text.text.strip() if step_text else "No instructions found"
+    
+        # Print the step number and instructions
+        print(f"{step_number}: {instructions}")
+
     try:
+        # Check if Nutrition section exists
         nutrition_button = driver.find_element(By.XPATH, """/html/body/div[1]/div[4]/main/div[2]/div/div[3]/div[1]/div[1]/div[2]/div/div/div[1]/div[1]/h2[2]/button""")
         # Scroll to the Nutrition button
-        # Scroll to the button
         driver.execute_script("arguments[0].scrollIntoView();", nutrition_button)
 
         html_content2 = driver.page_source  # Fetch the current page's source
 
-# Parse with BeautifulSoup
+        # Parse with BeautifulSoup
         soup2 = BeautifulSoup(html_content2, 'html.parser')
 
-# Find the Nutrition section
+        # Find the Nutrition section
         nutrition_list = soup2.find('ul', class_='nutrition-list')
         if nutrition_list:
-    # Extract all nutritional items
+            # Extract all nutritional items
             nutrition_items = nutrition_list.find_all('li', class_='nutrition-list__item')
             nutrition_data = {}
             for item in nutrition_items:
-        # Extract the label and value
+                # Extract the label and value
                 label = item.find('span', class_='fw-600 mr-1').text.strip()
                 value = item.get_text(strip=True).replace(label, '').strip()
                 nutrition_data[label] = value
-    
-    # Print the extracted nutrition data
-        print("Nutritional Values:")
-        for key, value in nutrition_data.items():
-            print(f"{key}: {value}")
+        
+            # Print the extracted nutrition data
+            print("Nutritional Values:")
+            for key, value in nutrition_data.items():
+                print(f"{key}: {value}")
         k += 1
     except Exception:
         print("Nutrition button not found. Skipping...")
         continue  # Skip to the next recipe
 
 # Close the browser after finishing
-print(k)
+print(f"Processed {k} recipes.")
 driver.quit()
