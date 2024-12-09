@@ -8,41 +8,27 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url_for('home') }}">
-                SmartBit<span class="cookie-logo"><img src="{{ url_for('static', filename='images/cookie_logo.png')}}"alt="Cookie"></span>
-            </a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ url_for('login') }}">Login</a>
-                    </li>
-                </ul>
+    {% include 'navbar.html' %}
+    <h2 class="sleek-heading">SmartBit<span class="cookie-in-heading"><img src="{{ url_for('static', filename='images/cookie_logo.png')}}" alt="Cookie"></span></h2>
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <div class="form-container border border-dark-subtle rounded">
+            <!-- Login Form -->
+            <div class="container mt-5">
+                <h2 class="text-center">Sign in!</h2>
+                <form>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <button type="submit" class="btn-login-page">Sign in</button>
+                    <p class="text-center mt-2">Don't have an account? <a href="{{ url_for('register') }}"> Sign up now!</a></p>
+                </form>
             </div>
         </div>
-    </nav>
-
-    <!-- Login Form -->
-    <div class="container mt-5">
-        <h2 class="text-center">Sign in!</h2>
-        <form>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter the email address.">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter the password.">
-            </div>
-            <button type="submit" class="btn-login-page">Sign in</button>
-            <p class="text-center mt-2">Don't have an account? <a href="register.html"> Register now!</a></p>
-        </form>
     </div>
 
     <!-- Bootstrap JS -->
