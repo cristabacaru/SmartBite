@@ -16,13 +16,13 @@ def login():
 
         connection = sqlite3.connect("database.db")
         cursor = connection.cursor()
-        cursor.execute("SELECT password FROM users WHERE email = ?", (email,))
-        db_password = cursor.fetchone()
+        cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
+        user = cursor.fetchone()
         connection.commit()
         connection.close()
-        if db_password:
-            if password == db_password[0]:
-                return redirect(url_for('success'))
+        if user:
+            if password == user[4]:
+                return redirect(url_for('home'))
             else:
                 print("incorrect password")
                 return redirect(url_for('login'))
@@ -49,7 +49,7 @@ def register():
 
         connection = sqlite3.connect("database.db")
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO users (name, username, email, password, age, gender, caloric_goal, height, weight)\
+        cursor.execute("INSERT OR IGNORE INTO users (name, username, email, password, age, gender, caloric_goal, height, weight)\
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (name, username, email, password, age, gender, goal, height, weight))
         connection.commit()
         connection.close()
