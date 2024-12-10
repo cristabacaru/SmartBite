@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key_here'
 
 @app.route('/')
 def home():
@@ -22,6 +23,7 @@ def login():
         connection.close()
         if user:
             if password == user[4]:
+                session['user_id'] = user[0]
                 return redirect(url_for('home_logged_in'))
             else:
                 return render_template('login.html', error="Invalid email or password")
@@ -63,6 +65,15 @@ def home_logged_in():
     cursor.execute("SELECT recipe_id, name, description FROM recipes")
     rows = cursor.fetchall()
 
+    user_id = session['user_id']
+
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM users WHERE user_id=?", (user_id,))
+    user_info = cursor.fetchone()
+    connection.commit()
+    connection.close()
+
     # Generate a list of cards
     all_cards = []
     for row in rows:
@@ -87,7 +98,8 @@ def home_logged_in():
         'home_logged_in.html',
         cards=paginated_cards,
         current_page=page,
-        total_pages=total_pages
+        total_pages=total_pages,
+        user_info=user_info
     )
 
     
