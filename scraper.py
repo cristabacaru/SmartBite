@@ -5,11 +5,13 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
+import re
 
 # Setup ChromeDriver
 service = Service(executable_path="./chromedriver")
 driver = webdriver.Chrome(service=service)
 k = 0
+v = 0
 
 # Base URL for the recipe collection
 base_url = "https://www.bbcgoodfood.com/recipes/collection/quick-and-easy-family-recipes?page="
@@ -38,6 +40,37 @@ for page_number in range(1, 5):  # Change range as per your need
 # Print the total number of recipe links found
 print(f"Total recipes found: {len(all_recipe_links)}")
 
+def sanitize_title_for_url(title):
+    # Convert to lowercase and replace spaces with hyphens for URL compatibility
+    return title.lower().replace(' ', '-')
+
+# Function to convert a string to camel case
+def to_camel_case(title):
+    # Remove spaces and capitalize each word (except the first one)
+    words = title.split(' ')
+    return words[0].lower() + ''.join(word.capitalize() for word in words[1:])
+
+# Function to check if a sanitized title exists in an image URL, considering case insensitivity and camel case
+def matches_title_in_img_url(img_url, sanitized_title):
+    # Normalize the image URL by making it lowercase
+    img_url_normalized = img_url.lower()
+
+    # Check for case-insensitive match, sanitized title, and camel case variations
+    if sanitized_title in img_url_normalized:
+        return True
+    camel_case_title = to_camel_case(sanitized_title)
+    if camel_case_title in img_url_normalized:
+        return True
+    return False
+
+def matches_image_by_title(img_title, recipe_title):
+    # Normalize both titles by converting to lowercase and removing extra spaces
+    img_title_normalized = re.sub(r'\s+', ' ', img_title.lower()).strip()
+    recipe_title_normalized = re.sub(r'\s+', ' ', recipe_title.lower()).strip()
+    # Check if the sanitized recipe title is part of the image title
+    return recipe_title_normalized in img_title_normalized
+
+
 # Now let's inspect each recipe page
 for recipe_link in all_recipe_links:
     print(f"\nInspecting recipe: {recipe_link}")
@@ -51,6 +84,20 @@ for recipe_link in all_recipe_links:
     # Extract the recipe title
     title_tag = soup.find('h1', class_='heading-1')
     title = title_tag.text.strip() if title_tag else "No title found"
+
+    img_tags = soup.find_all('img')
+
+# Loop through all image tags to find the one that matches the title
+    for img_tag in img_tags:
+        img_title = img_tag.get('title', '').strip()  # Extract title attribute
+    
+    # If the image title matches the recipe title
+        if matches_image_by_title(img_title, title):
+            img_url = img_tag.get('src', '')  # Extract image URL
+            v += 1
+            print(f"Found image URL: {img_url}")
+            break
+            
     
     # Extract the ingredients
     ingredients_section = soup.find('ul', class_='ingredients-list list')
@@ -65,7 +112,7 @@ for recipe_link in all_recipe_links:
     print("Ingredients:")
     for ingredient in ingredients:
         print(f"- {ingredient}")
-
+    
     # Check for the presence of the Method section
     method_section = driver.find_elements(By.XPATH, "//h2[text()='Method']")
     if not method_section:
@@ -133,4 +180,5 @@ for recipe_link in all_recipe_links:
 
 # Close the browser after finishing
 print(f"Processed {k} recipes.")
+print(v)
 driver.quit()
