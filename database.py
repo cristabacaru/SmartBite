@@ -34,7 +34,9 @@ cursor.execute("CREATE TABLE IF NOT EXISTS users (\
                 gender TEXT NOT NULL,\
                 caloric_goal INTEGER NOT NULL,\
                 height REAL NOT NULL,\
-                weight REAL NOT NULL);")
+                weight REAL NOT NULL,\
+                weight_goal REAL NOT NULL,\
+                activity TEXT NOT NULL);")
 # commit the creation of tables
 connection.commit()
 
