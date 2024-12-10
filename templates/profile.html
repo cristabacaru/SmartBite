@@ -12,11 +12,81 @@
 
     <!-- Main content wrapper -->
     <div class="main-content">
-        <!-- Home Page Content -->
-        <div class="container text-center">
-            <p class="main-page-text">Edit Profile.</p>
-             <!-- Link to Login Page -->
+        <h2 class="text-center mt-5"> Tell us about you!</h2>
+    <!-- Form container with a border and centered -->
+    <div class="position-absolute start-50 translate-middle" style="top: 55%;" >
+        <div class="form-container border border-dark-subtle rounded p-4 mt-5" style="transform: scale(0.8); " >
+            <!-- Register Form -->
+            <form class="row g-3" action="{{ url_for('register') }}" method="POST">
+                <div class="col-md-6">
+                    <label for="validationServerUsername" class="form-label">Username</label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                        <input name="username" type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                            Enter new username.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="validationServer03" class="form-label">Age</label>
+                    <input name="age" type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div id="validationServer03Feedback" class="invalid-feedback">
+                        Update age.
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <label for="validationServer04" class="form-label">Gender</label>
+                    <select name="gender" class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
+                        <option selected disabled value="">Choose...</option>
+                        <option>Female</option>
+                        <option>Male</option>
+                        <option>Other</option>
+
+                    </select>
+                    <div id="validationServer04Feedback" class="invalid-feedback">
+                        Change gender.
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="validationServer05" class="form-label">Height</label>
+                    <input name="height" type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
+                    <div id="validationServer05Feedback" class="invalid-feedback">
+                        Update height.
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="validationServer05" class="form-label">Weight</label>
+                    <input name="weight" type="text" class="form-control is-invalid" id="validationServer06" aria-describedby="validationServer05Feedback" required>
+                    <div id="validationServer05Feedback" class="invalid-feedback">
+                        Update weight.
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <label for="validationServer04" class="form-label">Goal</label>
+                    <select name="goal" class="form-select is-invalid" id="validationServer07" aria-describedby="validationServer04Feedback" required>
+                        <option selected disabled value="">Choose...</option>
+                        <option>Maintain Weight</option>
+                        <option>Lose Weight</option>
+                        <option>Gain Weight</option>
+
+                    </select>
+                    <div id="validationServer04Feedback" class="invalid-feedback">
+                        Update your goal.
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Create Account</button>
+                </div>
+            </form>
         </div>
+    </div>
     </div>
 
     <!-- Bootstrap JS -->

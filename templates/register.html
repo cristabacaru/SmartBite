@@ -9,7 +9,7 @@
 </head>
 <body>
     {% include 'navbar.html' %}
-    <h2 class="text-center mt-5"> Tell us about you!</h2>
+    <h2 class="text-center mt-1"> Tell us about you!</h2>
     <!-- Form container with a border and centered -->
     <div class="position-absolute start-50 translate-middle" style="top: 55%;" >
         <div class="form-container border border-dark-subtle rounded p-4 mt-5" style="transform: scale(0.8); " >
@@ -75,27 +75,35 @@
                         <option>Female</option>
                         <option>Male</option>
                         <option>Other</option>
-
+                        
                     </select>
                     <div id="validationServer04Feedback" class="invalid-feedback">
                         Please select your gender.
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4" ></div>
+                <div class="col-md-4">
                     <label for="validationServer05" class="form-label">Height</label>
                     <input name="height" type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
                     <div id="validationServer05Feedback" class="invalid-feedback">
                         Please enter your height.
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="validationServer05" class="form-label">Weight</label>
                     <input name="weight" type="text" class="form-control is-invalid" id="validationServer06" aria-describedby="validationServer05Feedback" required>
                     <div id="validationServer05Feedback" class="invalid-feedback">
                         Please enter your weight.
                     </div>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-4">
+                    <label for="validationServer05" class="form-label">Desired Weight</label>
+                    <input name="weight" type="text" class="form-control is-invalid" id="validationServer06" aria-describedby="validationServer05Feedback" required>
+                    <div id="validationServer05Feedback" class="invalid-feedback">
+                        Please enter your desired weight.
+                    </div>
+                </div>
+                <div class="col-md-5">
                     <label for="validationServer04" class="form-label">Goal</label>
                     <select name="goal" class="form-select is-invalid" id="validationServer07" aria-describedby="validationServer04Feedback" required>
                         <option selected disabled value="">Choose...</option>
@@ -105,7 +113,21 @@
 
                     </select>
                     <div id="validationServer04Feedback" class="invalid-feedback">
-                        Please select your gender.
+                        Please select your desired goal.
+                    </div>
+                </div>
+                <div class="col-md-5    ">
+                    <label for="validationServer04" class="form-label">Activity Level</label>
+                    <select name="goal" class="form-select is-invalid" id="validationServer07" aria-describedby="validationServer04Feedback" required>
+                        <option selected disabled value="">Choose...</option>
+                        <option>Sedentary</option>
+                        <option>Lightly Active</option>
+                        <option>Moderately Active</option>
+                        <option>Very Active</option>
+
+                    </select>
+                    <div id="validationServer04Feedback" class="invalid-feedback">
+                        Please select your activity level.
                     </div>
                 </div>
                 <div class="col-12">
