@@ -22,13 +22,11 @@ def login():
         connection.close()
         if user:
             if password == user[4]:
-                return redirect(url_for('home'))
+                return redirect(url_for('home_logged_in'))
             else:
-                print("incorrect password")
-                return redirect(url_for('login'))
+                return render_template('login.html', error="Invalid email or password")
         else:
-            print("incorrect mail")
-            return redirect(url_for('login'))
+           return render_template('login.html', error="Invalid email or password")
             
     return render_template('login.html')
 
@@ -55,13 +53,56 @@ def register():
         connection.close()
 
         # Redirect to a success page or render a response
-        return redirect(url_for('success'))
+        return redirect(url_for('home_logged_in'))
     return render_template('register.html')  # Render the form template
 
-# asta nush daca e necesara
-@app.route('/success')
-def success():
-    return "Registration Successful!"
+@app.route('/home')
+def home_logged_in():
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT recipe_id, name, description FROM recipes")
+    rows = cursor.fetchall()
+
+    # Generate a list of cards
+    all_cards = []
+    for row in rows:
+        card = {
+            'id': row[0],
+            'title': row[1],
+            'description': row[2],
+            'image_url': f'/static/images/card{row[0] % 6 + 1}.jpg',  # Use modulo for image recycling
+            'link': '#'
+        }
+        all_cards.append(card)
+
+    # Pagination logic
+    per_page = 21
+    page = int(request.args.get('page', 1))  # Get the current page, default to 1
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_cards = all_cards[start:end]
+    total_pages = -(-len(all_cards) // per_page)  # Ceiling division for total pages
+
+    return render_template(
+        'home_logged_in.html',
+        cards=paginated_cards,
+        current_page=page,
+        total_pages=total_pages
+    )
+
+    
+@app.route('/browse_recipes')
+def browse_recipes():
+    return render_template('browse_recipes.html')
+
+@app.route('/meal_plan')
+def meal_plan():
+    return render_template('meal_plan.html')
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
