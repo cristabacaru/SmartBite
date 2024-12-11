@@ -74,7 +74,7 @@ def home_logged_in():
 
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM users WHERE user_id=?", (user_id,))
+    cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
     user_info = cursor.fetchone()
     connection.commit()
     connection.close()
@@ -86,7 +86,7 @@ def home_logged_in():
             'id': row[0],
             'title': row[1],
             'description': row[3],
-            'image_url': row[5],
+            'image_url': row[5],  # Use modulo for image recycling
             'link': '#'
         }
         all_cards.append(card)
@@ -114,55 +114,7 @@ def browse_recipes():
 
 @app.route('/meal_plan')
 def meal_plan():
-    import math
-    connection = sqlite3.connect("database.db")
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM recipes LIMIT 21")  # Fetch exactly 21 recipes
-    rows = cursor.fetchall()
-
-    user_id = session['user_id']
-
-    connection = sqlite3.connect("database.db")
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM users WHERE user_id=?", (user_id,))
-    user_info = cursor.fetchone()
-    connection.commit()
-    connection.close()
-
-    # Define weekday names
-    weekdays = [
-        "Mindful Monday Meals",
-        "Tasty Tuesday Treats",
-        "Wellness Wednesday",
-        "Thoughtful Thursday Plates",
-        "Feel-Good Friday Feasts",
-        "Satisfying Saturday Selections",
-        "Simple Sunday Suppers"
-    ]
-
-    # Group recipes into sets of three for each day
-    weekly_meals = {}
-    for i, row in enumerate(rows):
-        day_index = i // 3  # Determine which day this recipe belongs to
-        meal_type = ["Breakfast", "Lunch", "Dinner"][i % 3]  # Cycle through meal types
-        if day_index < len(weekdays):  # Ensure we don't exceed available days
-            if weekdays[day_index] not in weekly_meals:
-                weekly_meals[weekdays[day_index]] = []
-
-            meal_card = {
-                'id': row[0],
-                'title': f"{meal_type}",  # Use meal type for title
-                'description': row[3],
-                'image_url': row[5],
-                'link': '#'
-            }
-            weekly_meals[weekdays[day_index]].append(meal_card)
-
-    return render_template(
-        'meal_plan.html',
-        weekly_meals=weekly_meals,
-        user_info=user_info
-    )
+    return render_template('meal_plan.html')
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -175,6 +127,7 @@ def profile():
         weight = request.form.get('weight')
         weight_goal = request.form.get('weight_goal')
         goal = request.form.get('goal')
+        print(goal)
         activity = request.form.get('activity')
 
         connection = sqlite3.connect("database.db")
@@ -193,6 +146,6 @@ def profile():
     connection.close()
     return render_template('profile.html', user_info=user_info)
 
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
-

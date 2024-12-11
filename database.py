@@ -65,50 +65,5 @@ for recipe in recipe_data:
         cursor.execute("INSERT OR IGNORE INTO recipe_ingredients (recipe_id, ingredient_id) VALUES (?, ?)", (recipe_id, ingredient_id))
         connection.commit()
 
-
-
-
-
-# recipe_name = "Spaghetti Carbonara"
-# calories = 600
-# description = "A classic Italian pasta dish with eggs, cheese, pancetta, and pepper."
-# instructions = "Boil pasta, fry pancetta, combine with egg mixture, and serve with cheese and pepper."
-# picture = "carbonara.jpg"
-
-# # Insert Recipe
-# cursor.execute("INSERT OR IGNORE INTO recipes (name, calories, description, instructions, picture)\
-#                 VALUES (?, ?, ?, ?, ?)", (recipe_name, calories, description, instructions, picture))
-# connection.commit()
-# recipe_id = cursor.lastrowid
-
-# # Ingredients for the Recipe
-# ingredients_name = [
-#     ("Pasta",),               # 1
-#     ("Pancetta",),            # 2
-#     ("Eggs",),                # 3
-#     ("Parmesan Cheese",),     # 4
-#     ("Black Pepper",),        # 5
-#     ("Salt",)                 # 6
-# ]
-
-# # Insert Ingredients
-# cursor.executemany("INSERT OR IGNORE INTO ingredients (name) VALUES (?)", ingredients_name)
-# connection.commit()
-
-# # Add Recipe Ingredients
-# recipe_ingredients = [
-#     (recipe_id, 1, 400, "grams"),  # Pasta
-#     (recipe_id, 2, 100, "grams"),  # Pancetta
-#     (recipe_id, 3, 4, "units"),    # Eggs
-#     (recipe_id, 4, 100, "grams"),  # Parmesan Cheese
-#     (recipe_id, 5, 1, "teaspoon"), # Black Pepper
-#     (recipe_id, 6, 1, "teaspoon")  # Salt
-# ]
-
-# # Insert Recipe Ingredients
-# cursor.executemany("INSERT OR IGNORE INTO recipe_ingredients (recipe_id, ingredient_id, quantity, unit)\
-#                     VALUES (?, ?, ?, ?)", recipe_ingredients)
-# connection.commit()
-
 connection.close()
 
