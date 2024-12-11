@@ -15,13 +15,13 @@ def calculate_bmr(weight, height, age, gender):
 
 def calculate_tdee(bmr, activity_level):
     if activity_level == 'Sedentary':
-        return bmr * 1
+        return bmr * 1.2
     elif activity_level == 'Lightly Active':
-        return bmr * 1
+        return bmr * 1.375
     elif activity_level == 'Moderately Active':
-        return bmr * 1
+        return bmr * 1.55
     elif activity_level == 'Very Active':
-        return bmr * 1
+        return bmr * 1.725
     else:
         return bmr * 1
 
