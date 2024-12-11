@@ -16,7 +16,7 @@
             <div class="col-md-7">
                 <div class="input-group mb-2">
                     <label class="form-label me-3" style="color: white; font-size: larger;">Username:</label>
-                    <input id="usernameInput" type="text" class="form-control" placeholder="@{{user_info[2]}}" aria-label="Recipient's username" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <input name="username" id="usernameInput" type="text" class="form-control" placeholder="@{{user_info[2]}}" aria-label="Recipient's username" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
                     <button class="btn btn-outline-light" type="button" id="userButton">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
@@ -29,7 +29,7 @@
             <div class="col-md-4">
                 <div class="input-group mb-4">
                     <label class="form-label me-3" style="color: white; font-size: larger;">Age:</label>
-                    <input id="ageInput" type="text" class="form-control" placeholder="{{user_info[5]}}" aria-label="Recipient's age" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <input name="age" id="ageInput" type="text" class="form-control" placeholder="{{user_info[5]}}" aria-label="Recipient's age" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
                     <button class="btn btn-outline-light" type="button" id="ageButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                       </svg></button>
@@ -41,7 +41,7 @@
             <div class="col-md-4">
                 <div class="input-group mb-4">
                     <label class="form-label me-3" style="color: white; font-size: larger;">Height:</label>
-                    <input id="heightInput" type="text" class="form-control" placeholder="{{user_info[8]}} cm" aria-label="Recipient's height" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <input name="height" id="heightInput" type="text" class="form-control" placeholder="{{user_info[8]}} cm" aria-label="Recipient's height" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
                     <button class="btn btn-outline-light" type="button" id="heightButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                       </svg></button>
@@ -51,7 +51,7 @@
             <div class="col-md-4">
                 <div class="input-group mb-4">
                     <label class="form-label me-3" style="color: white; font-size: larger;">Weight:</label>
-                    <input id="weightInput"type="text" class="form-control" placeholder="{{user_info[9]}} kg" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <input name="weight" id="weightInput"type="text" class="form-control" placeholder="{{user_info[9]}} kg" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
                     <button class="btn btn-outline-light" type="button" id="weightButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                       </svg></button>
@@ -61,7 +61,7 @@
             <div class="col-md-5">
                 <div class="input-group mb-4">
                     <label class="form-label me-3" style="color: white; font-size: larger;">Desired Weight:</label>
-                    <input id="desiredWeightInput" type="text" class="form-control" placeholder="{{user_info[10]}} kg" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <input name="weight_goal" id="desiredWeightInput" type="text" class="form-control" placeholder="{{user_info[10]}} kg" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
                     <button class="btn btn-outline-light" type="button" id="desiredWeightButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                       </svg></button>
@@ -71,7 +71,7 @@
             <div class="col-md-5">
                 <div class="input-group mb-4">
                     <label class="form-label me-3" style="color: white; font-size: larger;">Goal:</label>
-                    <input id="goalInput" type="text" class="form-control" placeholder="{{user_info[7]}}" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <input name="goal" id="goalInput" type="text" class="form-control" placeholder="{{user_info[7]}}" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
                     <button class="btn btn-outline-light" type="button" id="goalButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                       </svg>
@@ -82,7 +82,7 @@
             <div class="col-md-7">
                 <div class="input-group mb-4">
                     <label class="form-label me-3" style="color: white; font-size: larger;">Activity Level:</label>
-                    <input id="activityInput" type="text" class="form-control" placeholder="{{user_info[11]}}" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <input name="activity" id="activityInput" type="text" class="form-control" placeholder="{{user_info[11]}}" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
                     <button class="btn btn-outline-light" type="button" id="activityButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                       </svg></button>

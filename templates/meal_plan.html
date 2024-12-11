@@ -10,14 +10,32 @@
 <body class = "body-home">
     {% include 'navbar_logged_in.html' %}
 
-    <!-- Main content wrapper -->
-    <div class="main-content">
-        <!-- Home Page Content -->
-        <div class="container text-center">
-            <p class="main-page-text">Meal plan.</p>
-             <!-- Link to Login Page -->
+    <h1 class="text-center mt-3" style="font-weight: 300; text-shadow: 0px 2px 2px rgba(2, 6, 64, 0.854); color: white;">Welcome back, {{user_info[2]}}!</h1>
+    <hr style="width: 100%; border: 1px solid #000;">
+    <h2 class="text-center mt-3" style="font-size: 2.5rem; font-weight: 700; text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.854);">This Is Your Weekly Meal Overview</h2>
+    <p class="text-center mt-4" style="font-size: 1.3rem; text-shadow: 0px 1px 1px rgb(0, 0, 0);">Your weekly calorie goal is set to [XXXX] kcal. Let’s make it achievable!</p>
+    
+    {% for day, meals in weekly_meals.items() %}
+    <h2 class="text-start mx-5 mt-5" style="font-size: 2rem; font-weight: 500; color: white; text-shadow: 0px 2px 4px rgba(2, 6, 64, 0.854);">{{ day }}</h2>
+    <hr style="width: 100%; border: 1px solid #000;">
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for meal in meals %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ meal.image_url }}" class="card-img-top" alt="{{ meal.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ meal.title }}</h5>
+                        <p class="card-text">{{ meal.description }}</p>
+                        <a href="{{ meal.link }}" class="btn btn-primary" style="background-color: #1b0b5a; border:none;">View Recipe</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
+    {% endfor %}
+    
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
