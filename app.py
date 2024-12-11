@@ -116,13 +116,31 @@ def browse_recipes():
 def meal_plan():
     return render_template('meal_plan.html')
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
     user_id = session['user_id']
+    if request.method == 'POST':
+        # Extract data from the form
+        username = request.form.get('username')
+        age = request.form.get('age')
+        height = request.form.get('height')
+        weight = request.form.get('weight')
+        weight_goal = request.form.get('weight_goal')
+        goal = request.form.get('goal')
+        print(goal)
+        activity = request.form.get('activity')
+
+        connection = sqlite3.connect("database.db")
+        cursor = connection.cursor()
+        cursor.execute("UPDATE users\
+                        SET username = ?, age = ?, caloric_goal = ?, height = ?, weight = ?, weight_goal = ?, activity = ?\
+                        WHERE user_id = ?;", (username, age, goal, height, weight, weight_goal, activity, user_id))
+        connection.commit()
+        connection.close()
 
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM users WHERE user_id=?", (user_id,))
+    cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
     user_info = cursor.fetchone()
     connection.commit()
     connection.close()
