@@ -12,28 +12,34 @@
     <h2 class="text-center mt-5", style="font-weight: 700;text-shadow: 1px 1px 1px rgba(2, 6, 64, 0.854); color: white;"> {{ recipe[1] }}</h2>
     <hr style="width: 100%; border: 1px solid #000;">
 
-    <div class="container my-5" style="margin-left: 4em; box-shadow: 0 10px 10px rgba(0, 0, 0);">
+    <div class="container my-5">
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            <!-- First Column: Image -->
-            <div class="col-md-7">
-                <div class="card w-50" style="border-color: #ffffff; border-width: 3px;">
+            <div class="col-md-4">
+                <div class="card w-100" style="box-shadow:5px 5px 5px rgba(2, 6, 64, 0.854);">
                     <img src="{{ recipe[5] }}" class="card-img-start">
                     <div class="card-body">
                         <p class="card-text">{{ recipe[3] }}</p>
                     </div>
                 </div>
             </div>
-    
-            <!-- Second Column: List Group -->
-            <div class="col-md-5">
-                <ul class="list-group">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <label for="list-items" class="h3" style="color:white; text-shadow: 1px 1px 1px rgba(2, 6, 64, 0.854);">Ingredients:</label>
+                <ul class="list-group" style="box-shadow:5px 5px 5px rgba(2, 6, 64, 0.854);">
                     <li class="list-group-item">An item</li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li>
-                    <li class="list-group-item">A fourth item</li>
-                    <li class="list-group-item">And a fifth one</li>
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">An item</li>
                 </ul>
             </div>
+            <div class="col-md-12">
+                <p style="color: white;">{{recipe[4]}}</p>
+            </div>
+            
         </div>
     </div>
     
