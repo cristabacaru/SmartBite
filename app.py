@@ -112,7 +112,21 @@ def home_logged_in():
     
 @app.route('/browse_recipes', methods=['GET', 'POST'])
 def browse_recipes():
-    return render_template('browse_recipes.html')
+    user_id = session['user_id']
+
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
+    user_info = cursor.fetchone()
+    connection.commit()
+    connection.close()
+    return render_template(
+        'browse_recipes.html',
+        cards=[],
+        current_page=0,
+        total_pages=0,
+        user_info=user_info
+    )
 
 @app.route('/meal_plan')
 def meal_plan():
@@ -196,6 +210,24 @@ def profile():
     connection.commit()
     connection.close()
     return render_template('profile.html', user_info=user_info)
+
+@app.route('/recipe')
+def recipe():
+    recipe_id = request.args.get('id')  # Get the recipe ID from the query parameters
+    if not recipe_id:
+        return redirect(url_for('home_logged_in'))  # Redirect if no ID is provided
+
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM recipes WHERE recipe_id = ?", (recipe_id,))
+    recipe_data = cursor.fetchone()
+    connection.commit()
+    connection.close()
+
+    if not recipe_data:
+        return render_template('404.html'), 404  # Show a 404 page if recipe not found
+
+    return render_template('recipe.html', recipe=recipe_data)
 
 
 if __name__ == '__main__':
