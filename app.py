@@ -74,7 +74,7 @@ def home_logged_in():
 
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM users WHERE user_id=?", (user_id,))
+    cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
     user_info = cursor.fetchone()
     connection.commit()
     connection.close()
