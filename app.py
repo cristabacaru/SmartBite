@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
+from calories_calc_recipes import *
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -49,10 +50,11 @@ def register():
         activity = request.form.get('activity')
         agree = request.form.get('agree')
 
+        recommended_calories = calculate_calories(float(weight), float(height), float(age), gender, goal, activity, abs(float(weight)-float(weight_goal)))
         connection = sqlite3.connect("database.db")
         cursor = connection.cursor()
-        cursor.execute("INSERT OR IGNORE INTO users (name, username, email, password, age, gender, caloric_goal, height, weight, weight_goal, activity)\
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (name, username, email, password, age, gender, goal, height, weight, weight_goal, activity))
+        cursor.execute("INSERT OR IGNORE INTO users (name, username, email, password, age, gender, caloric_goal, height, weight, weight_goal, activity, recommended_calories)\
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (name, username, email, password, age, gender, goal, height, weight, weight_goal, activity, recommended_calories))
         connection.commit()
         cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
         user = cursor.fetchone()
@@ -170,7 +172,6 @@ def profile():
         weight = request.form.get('weight')
         weight_goal = request.form.get('weight_goal')
         goal = request.form.get('goal')
-        print(goal)
         activity = request.form.get('activity')
 
         connection = sqlite3.connect("database.db")
@@ -178,6 +179,13 @@ def profile():
         cursor.execute("UPDATE users\
                         SET username = ?, age = ?, caloric_goal = ?, height = ?, weight = ?, weight_goal = ?, activity = ?\
                         WHERE user_id = ?;", (username, age, goal, height, weight, weight_goal, activity, user_id))
+        connection.commit()
+        cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
+        user_info = cursor.fetchone()
+        recommended_calories = calculate_calories(float(user_info[9]), float(user_info[8]), float(user_info[5]), user_info[6], user_info[7], user_info[11], abs(float(user_info[9])-float(user_info[10])))
+        cursor.execute("UPDATE users\
+                        SET recommended_calories = ?\
+                        WHERE user_id = ?;", (recommended_calories, user_id))
         connection.commit()
         connection.close()
 
