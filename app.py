@@ -110,7 +110,7 @@ def home_logged_in():
     )
 
     
-@app.route('/browse_recipes')
+@app.route('/browse_recipes', methods=['POST'])
 def browse_recipes():
     return render_template('browse_recipes.html')
 
