@@ -118,7 +118,15 @@ def meal_plan():
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    user_id = session['user_id']
+
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM users WHERE user_id=?", (user_id,))
+    user_info = cursor.fetchone()
+    connection.commit()
+    connection.close()
+    return render_template('profile.html', user_info=user_info)
 
 
 if __name__ == '__main__':
