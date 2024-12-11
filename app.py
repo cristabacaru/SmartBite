@@ -117,16 +117,24 @@ def browse_recipes():
 @app.route('/meal_plan')
 def meal_plan():
     import math
-    connection = sqlite3.connect("database.db")
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM recipes LIMIT 21")  # Fetch exactly 21 recipes
-    rows = cursor.fetchall()
-    user_id = session['user_id']
 
+    user_id = session['user_id']
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
     user_info = cursor.fetchone()
+    connection.close()
+
+    recipe_ids = find_recipes_near_calories(user_info[12])
+    print(recipe_ids)
+
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
+    rows = []
+    for recipe in recipe_ids:
+        cursor.execute(f"SELECT * FROM recipes WHERE recipe_id = ?;", (recipe,))
+        rows.append(cursor.fetchone())
+    print(rows)
     connection.commit()
     connection.close()
     # Define weekday names

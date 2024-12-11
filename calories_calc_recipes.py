@@ -40,28 +40,30 @@ def calculate_calories(weight, height, age, gender, goal, activity_level, weight
     else:
         raise ValueError("Goal must be 'maintain', 'weight_loss', or 'weight_gain'.")
 
-def find_recipes_near_calories(target_calories, num_recipes=3, attempts=7):
+def find_recipes_near_calories(target_calories, num_recipes=7):
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
 
-    results = []
-    query = """
-    SELECT r1.recipe_id, r1.name, r2.recipe_id, r2.name, r3.recipe_id, r3.name, 
-           (r1.calories + r2.calories + r3.calories) AS total_calories
-    FROM recipes r1, recipes r2, recipes r3
-    WHERE r1.recipe_id < r2.recipe_id AND r2.recipe_id < r3.recipe_id
-    ORDER BY ABS(total_calories - ?) ASC
-    LIMIT ?;
-    """
+    import random
 
-    for _ in range(attempts):
-        cursor.execute(query, (target_calories, num_recipes))
+    for _ in range(num_recipes):
+        random_nr = random.randint(1, 93)
+        results = []
+        query = """
+        SELECT r1.recipe_id, r2.recipe_id, r3.recipe_id, 
+            (r1.calories + r2.calories + r3.calories) AS total_calories
+        FROM recipes r1, recipes r2, recipes r3
+        WHERE ? < r1.recipe_id AND r1.recipe_id < r2.recipe_id AND r2.recipe_id < r3.recipe_id
+        ORDER BY ABS(total_calories - ?) ASC
+        LIMIT ?;
+        """
+
+        cursor.execute(query, (random_nr, target_calories, num_recipes))
         rows = cursor.fetchall()
         for row in rows:
-            recipe_ids = (row[0], row[2], row[4])
-            recipe_names = (row[1], row[3], row[5])
-            total_calories = row[6]
-            results.append((recipe_ids, recipe_names, total_calories))
+            results.append(row[0])
+            results.append(row[1])
+            results.append(row[2])
 
     connection.close()
 
