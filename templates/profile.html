@@ -9,85 +9,189 @@
 </head>
 <body class = "body-home">
     {% include 'navbar_logged_in.html' %}
+    <h2 class="text-center mt-4"> Basic info</h2>
+    <div class="d-flex justify-content-center align-items-center vh-50">
+    <div class="form-container border border-dark-subtle rounded p-4 mt-2" style="width: 100%; max-width: 800px;">
+        <form class="row g-3" action="{{ url_for('profile') }}" method="POST">
+            <div class="col-md-7">
+                <div class="input-group mb-2">
+                    <label class="form-label me-3" style="color: white; font-size: larger;">Username:</label>
+                    <input id="usernameInput" type="text" class="form-control" placeholder="@{{user_info[2]}}" aria-label="Recipient's username" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <button class="btn btn-outline-light" type="button" id="userButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
 
-    <!-- Main content wrapper -->
-    <div class="main-content">
-        <h2 class="text-center mt-5"> Tell us about you!</h2>
-    <!-- Form container with a border and centered -->
-    <div class="position-absolute start-50 translate-middle" style="top: 55%;" >
-        <div class="form-container border border-dark-subtle rounded p-4 mt-5" style="transform: scale(0.8); " >
-            <!-- Register Form -->
-            <form class="row g-3" action="{{ url_for('register') }}" method="POST">
-                <div class="col-md-6">
-                    <label for="validationServerUsername" class="form-label">Username</label>
-                    <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                        <input name="username" type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                            Enter new username.
-                        </div>
-                    </div>
+            <div class="col-md-5"></div>
+            <div class="col-md-4">
+                <div class="input-group mb-4">
+                    <label class="form-label me-3" style="color: white; font-size: larger;">Age:</label>
+                    <input id="ageInput" type="text" class="form-control" placeholder="{{user_info[5]}}" aria-label="Recipient's age" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <button class="btn btn-outline-light" type="button" id="ageButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                      </svg></button>
                 </div>
-                <div class="col-md-3">
-                    <label for="validationServer03" class="form-label">Age</label>
-                    <input name="age" type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                    <div id="validationServer03Feedback" class="invalid-feedback">
-                        Update age.
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <label for="validationServer04" class="form-label">Gender</label>
-                    <select name="gender" class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
-                        <option selected disabled value="">Choose...</option>
-                        <option>Female</option>
-                        <option>Male</option>
-                        <option>Other</option>
+            </div>
 
-                    </select>
-                    <div id="validationServer04Feedback" class="invalid-feedback">
-                        Change gender.
-                    </div>
+            
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="input-group mb-4">
+                    <label class="form-label me-3" style="color: white; font-size: larger;">Height:</label>
+                    <input id="heightInput" type="text" class="form-control" placeholder="{{user_info[8]}} cm" aria-label="Recipient's height" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <button class="btn btn-outline-light" type="button" id="heightButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                      </svg></button>
                 </div>
-                <div class="col-md-3">
-                    <label for="validationServer05" class="form-label">Height</label>
-                    <input name="height" type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
-                    <div id="validationServer05Feedback" class="invalid-feedback">
-                        Update height.
-                    </div>
+            </div>
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <div class="input-group mb-4">
+                    <label class="form-label me-3" style="color: white; font-size: larger;">Weight:</label>
+                    <input id="weightInput"type="text" class="form-control" placeholder="{{user_info[9]}} kg" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <button class="btn btn-outline-light" type="button" id="weightButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                      </svg></button>
                 </div>
-                <div class="col-md-3">
-                    <label for="validationServer05" class="form-label">Weight</label>
-                    <input name="weight" type="text" class="form-control is-invalid" id="validationServer06" aria-describedby="validationServer05Feedback" required>
-                    <div id="validationServer05Feedback" class="invalid-feedback">
-                        Update weight.
-                    </div>
+            </div>
+            <div class="col-md-8"></div>
+            <div class="col-md-5">
+                <div class="input-group mb-4">
+                    <label class="form-label me-3" style="color: white; font-size: larger;">Desired Weight:</label>
+                    <input id="desiredWeightInput" type="text" class="form-control" placeholder="{{user_info[10]}} kg" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <button class="btn btn-outline-light" type="button" id="desiredWeightButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                      </svg></button>
                 </div>
-                <div class="col-md-7">
-                    <label for="validationServer04" class="form-label">Goal</label>
-                    <select name="goal" class="form-select is-invalid" id="validationServer07" aria-describedby="validationServer04Feedback" required>
-                        <option selected disabled value="">Choose...</option>
-                        <option>Maintain Weight</option>
-                        <option>Lose Weight</option>
-                        <option>Gain Weight</option>
-
-                    </select>
-                    <div id="validationServer04Feedback" class="invalid-feedback">
-                        Update your goal.
-                    </div>
+            </div>
+            <div class="col-md-7"></div>
+            <div class="col-md-5">
+                <div class="input-group mb-4">
+                    <label class="form-label me-3" style="color: white; font-size: larger;">Goal:</label>
+                    <input id="goalInput" type="text" class="form-control" placeholder="{{user_info[7]}}" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <button class="btn btn-outline-light" type="button" id="goalButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                      </svg>
+                    </button>
                 </div>
-                <div class="col-12">
-                    <button class="btn btn-primary" type="submit">Create Account</button>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-7">
+                <div class="input-group mb-4">
+                    <label class="form-label me-3" style="color: white; font-size: larger;">Activity Level:</label>
+                    <input id="activityInput" type="text" class="form-control" placeholder="{{user_info[11]}}" aria-label="Recipient's weight" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" readonly>
+                    <button class="btn btn-outline-light" type="button" id="activityButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                      </svg></button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
-    </div>
+</div>
+<script>
+    // Reusable function to handle input editing
+    function toggleEdit(inputId, buttonId, originalPlaceholder, isSelect = false, selectOptions = [], currentValue = '') {
+        const inputField = document.getElementById(inputId);
+        const editButton = document.getElementById(buttonId);
+
+        editButton.addEventListener("click", function() {
+            if (inputField.readOnly) {
+                // When input is readonly, allow editing
+                inputField.readOnly = false;
+                inputField.placeholder = '';
+                inputField.focus();
+
+                // If it's supposed to be a select, replace input with select dropdown
+                if (isSelect) {
+                    const select = document.createElement("select");
+                    select.classList.add("form-select");
+                    select.id = `${inputId}Select`; // Unique ID for select element
+
+                    // Add options to the select element
+                    selectOptions.forEach(option => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+
+                        // If the current value matches the option, mark it as selected
+                        if (option === currentValue) {
+                            optionElement.selected = true;
+                        }
+
+                        select.appendChild(optionElement);
+                    });
+
+                    // Replace the input with the select
+                    inputField.replaceWith(select);
+                    // Update button to Save
+                    editButton.innerHTML = 'Save';
+                    editButton.classList.remove("btn-outline-light");
+                    editButton.classList.add("btn-success");
+
+                    // Re-attach the toggleEdit for select
+                    select.addEventListener("click", function() {
+                        toggleEdit(inputId, buttonId, originalPlaceholder, true, selectOptions, currentValue);
+                    });
+                }
+                else {
+                    // Regular input field, no select needed
+                    editButton.innerHTML = 'Save';
+                    editButton.classList.remove("btn-outline-light");
+                    editButton.classList.add("btn-success");
+                }
+            } else {
+                // When editing is done, revert to the original form
+
+                // If it was a select element, get the selected value
+                if (isSelect) {
+                    const selectedValue = document.getElementById(`${inputId}Select`).value;
+                    inputField.value = selectedValue;  // Set the value of the input
+                    inputField.placeholder = selectedValue; // Set the placeholder to the selected value
+
+                    // Replace the select with the input field
+                    const newInput = document.createElement("input");
+                    newInput.type = "text";
+                    newInput.id = inputId;
+                    newInput.classList.add("form-control");
+                    newInput.value = selectedValue;
+                    newInput.readOnly = true;
+                    newInput.placeholder = originalPlaceholder; // Set the original placeholder
+                    newInput.style.borderTopLeftRadius = "15px";
+                    newInput.style.borderBottomLeftRadius = "15px";
+                    document.getElementById(`${inputId}Select`).replaceWith(newInput);
+                    // After replacing with the input, add the event listener back
+                    newInput.addEventListener("click", function() {
+                        toggleEdit(inputId, buttonId, originalPlaceholder, false, [], selectedValue);
+                    });
+                } else {
+                    // Regular input field, just save the value and revert
+                    inputField.readOnly = true;
+                    inputField.placeholder = originalPlaceholder; // Restore the original placeholder
+                }
+
+                // Change the button back to Edit
+                editButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/></svg>';
+                editButton.classList.remove("btn-success");
+                editButton.classList.add("btn-outline-light");
+            }
+        });
+    }
+
+        // Initialize the toggle function for each input field
+        toggleEdit("usernameInput", "userButton", "@{{user_info[2]}}");
+        toggleEdit("ageInput", "ageButton", "{{user_info[5]}}");
+        toggleEdit("heightInput", "heightButton", "{{user_info[8]}} cm");
+        toggleEdit("weightInput", "weightButton", "{{user_info[9]}} kg");
+        toggleEdit("desiredWeightInput", "desiredWeightButton", "{{user_info[10]}} kg");
+        const goalOptions = ["Maintain Weight", "Lose Weight", "Gain Weight"];
+        toggleEdit("goalInput", "goalButton", "{{user_info[7]}}", true, goalOptions);
+        const activityOptions = ["Sedentary", "Lightly Active", "Moderately Active", "Very Active"];
+        toggleEdit("activityInput", "activityButton", "{{user_info[11]}}", true, activityOptions);
+
+</script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
