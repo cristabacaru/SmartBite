@@ -44,17 +44,22 @@ def register():
         gender = request.form.get('gender')
         height = request.form.get('height')
         weight = request.form.get('weight')
+        weight_goal = request.form.get('weight_goal')
         goal = request.form.get('goal')
+        activity = request.form.get('activity')
         agree = request.form.get('agree')
 
         connection = sqlite3.connect("database.db")
         cursor = connection.cursor()
-        cursor.execute("INSERT OR IGNORE INTO users (name, username, email, password, age, gender, caloric_goal, height, weight)\
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (name, username, email, password, age, gender, goal, height, weight))
+        cursor.execute("INSERT OR IGNORE INTO users (name, username, email, password, age, gender, caloric_goal, height, weight, weight_goal, activity)\
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (name, username, email, password, age, gender, goal, height, weight, weight_goal, activity))
         connection.commit()
+        cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
+        user = cursor.fetchone()
         connection.close()
 
         # Redirect to a success page or render a response
+        session['user_id'] = user[0]
         return redirect(url_for('home_logged_in'))
     return render_template('register.html')  # Render the form template
 
@@ -62,7 +67,7 @@ def register():
 def home_logged_in():
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
-    cursor.execute("SELECT recipe_id, name, description FROM recipes")
+    cursor.execute("SELECT * FROM recipes")
     rows = cursor.fetchall()
 
     user_id = session['user_id']
@@ -80,8 +85,8 @@ def home_logged_in():
         card = {
             'id': row[0],
             'title': row[1],
-            'description': row[2],
-            'image_url': f'/static/images/card{row[0] % 6 + 1}.jpg',  # Use modulo for image recycling
+            'description': row[3],
+            'image_url': row[5],  # Use modulo for image recycling
             'link': '#'
         }
         all_cards.append(card)
