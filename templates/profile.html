@@ -90,8 +90,45 @@
                 </select>
             </div>
             <div class="col-12">
-                <button class="btn btn-primary" type="submit">Save Changes</button>
+                <div id="liveAlertPlaceholder"></div>
+                <button class="btn btn-primary" type="submit" id="liveAlertBtn">Save Changes</button>
             </div>
+            
+            <script>
+                const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+            
+                const appendAlert = (message, type) => {
+                    const wrapper = document.createElement('div');
+                    wrapper.innerHTML = [
+                        `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+                        `   <div>${message}</div>`,
+                        '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                        '</div>'
+                    ].join('');
+                    alertPlaceholder.append(wrapper);
+                    setTimeout(() => {
+                    const alert = wrapper; 
+                    if (alert) {
+                        alert.remove();
+                    }
+                    }, 3000);
+                };
+                window.onload = () => {
+                    const successMessage = sessionStorage.getItem('successMessage');
+                    if (successMessage) {
+                        appendAlert(successMessage, 'success');
+                        sessionStorage.removeItem('successMessage'); 
+                    }
+                };
+            
+                const alertTrigger = document.getElementById('liveAlertBtn');
+                if (alertTrigger) {
+                    alertTrigger.addEventListener('click', () => {
+                        sessionStorage.setItem('successMessage', 'Changes saved successfully!');
+                        location.reload();
+                    });
+                }
+            </script>
         </form>
     </div>
 </div>
@@ -110,7 +147,7 @@
             }
         });
     }
-        // Initialize the toggle function for each input field
+        // Initialize function for each input field
         toggleEdit("usernameInput", "userButton", "@{{user_info[2]}}");
         toggleEdit("ageInput", "ageButton", "{{user_info[5]}}");
         toggleEdit("heightInput", "heightButton", "{{user_info[8]}} cm");
