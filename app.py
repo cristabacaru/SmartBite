@@ -199,13 +199,12 @@ def meal_plan():
     weekly_meals = {}
     for i, row in enumerate(rows):
         day_index = i // 3  # Determine which day this recipe belongs to
-        meal_type = ["Breakfast", "Lunch", "Dinner"][i % 3]  # Cycle through meal types
         if day_index < len(weekdays):  # Ensure we don't exceed available days
             if weekdays[day_index] not in weekly_meals:
                 weekly_meals[weekdays[day_index]] = []
             meal_card = {
                 'id': row[0],
-                'title': f"{meal_type}",  # Use meal type for title
+                'title': row[1],  # Use meal type for title
                 'description': row[3],
                 'image_url': row[5],
                 'link': '#'
