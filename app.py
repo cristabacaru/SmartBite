@@ -113,11 +113,15 @@ def home_logged_in():
     
 @app.route('/browse_recipes', methods=['GET', 'POST'])
 def browse_recipes():
-    tags_list = []
-    final_tags = request.form.get('finalTags')
-    if final_tags:
-        tags_list = final_tags.split(',')
-    
+    # Handle `finalTags` from POST or GET
+    if request.method == 'POST':
+        final_tags = request.form.get('finalTags', '')
+    else:
+        final_tags = request.args.get('finalTags', '')
+
+    tags_list = final_tags.split(',') if final_tags else []
+
+    # Fetch recipes based on tags
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
     recipes = find_recipes_by_ingredients(tags_list)
@@ -125,27 +129,20 @@ def browse_recipes():
     for recipe in recipes:
         cursor.execute("SELECT * FROM recipes WHERE recipe_id = ?;", (recipe['recipe_id'],))
         row = cursor.fetchone()
-        row = list(row)
-        row.append(recipe['missing_ingredients'])
-        rows.append(row)
+        if row:
+            row = list(row)
+            row.append(recipe['missing_ingredients'])
+            rows.append(row)
     connection.close()
 
-    user_id = session['user_id']
-    connection = sqlite3.connect("database.db")
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
-    user_info = cursor.fetchone()
-    connection.commit()
-    connection.close()
-
-    # Generate a list of cards
+    # Generate card details
     all_cards = []
     for row in rows:
         card = {
             'id': row[0],
             'title': row[1],
             'description': row[3],
-            'image_url': row[5],  # Use modulo for image recycling
+            'image_url': row[5],
             'link': '#',
             'missing_ingredients': row[6]
         }
@@ -153,18 +150,18 @@ def browse_recipes():
 
     # Pagination logic
     per_page = 21
-    page = int(request.args.get('page', 1))  # Get the current page, default to 1
+    page = int(request.args.get('page', 1))
     start = (page - 1) * per_page
     end = start + per_page
     paginated_cards = all_cards[start:end]
-    total_pages = -(-len(all_cards) // per_page)  # Ceiling division for total pages
+    total_pages = -(-len(all_cards) // per_page)  # Ceiling division
 
     return render_template(
         'browse_recipes.html',
         cards=paginated_cards,
         current_page=page,
         total_pages=total_pages,
-        user_info=user_info
+        finalTags=final_tags,  # Pass `finalTags` back to the template
     )
 
 @app.route('/meal_plan')

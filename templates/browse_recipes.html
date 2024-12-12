@@ -54,19 +54,25 @@
                     <ul class="pagination">
                         <!-- Previous Button -->
                         <li class="page-item {% if current_page <= 1 %}disabled{% endif %}">
-                            <a class="page-link" href="?page={{ current_page - 1 }}" style="color: #1b0b5a;">Previous</a>
+                            <a class="page-link" 
+                               href="?page={{ current_page - 1 }}&finalTags={{finalTags}}" 
+                               style="color: #1b0b5a;">Previous</a>
                         </li>
             
                         <!-- Page Numbers -->
                         {% for page_num in range(1, total_pages + 1) %}
                         <li class="page-item {% if page_num == current_page %}active{% endif %}">
-                            <a class="page-link" href="?page={{ page_num }}" style="color: #1b0b5a;">{{ page_num }}</a>
+                            <a class="page-link" 
+                                href="?page={{ page_num }}&finalTags={{ finalTags }}" 
+                                style="color: #1b0b5a;">{{ page_num }}</a>
                         </li>
                         {% endfor %}
             
                         <!-- Next Button -->
                         <li class="page-item {% if current_page >= total_pages %}disabled{% endif %}">
-                            <a class="page-link" href="?page={{ current_page + 1 }}" style="color: #1b0b5a;">Next</a>
+                            <a class="page-link" 
+                               href="?page={{ current_page + 1 }}&finalTags={{finalTags}}" 
+                               style="color: #1b0b5a;">Next</a>
                         </li>
                     </ul>
                 </nav>

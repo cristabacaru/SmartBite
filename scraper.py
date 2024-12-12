@@ -39,7 +39,7 @@ for page_number in range(1, 5):
             all_recipe_links.append(full_link)
 
 
-print(f"Total recipes found: {len(all_recipe_links)}")
+# print(f"Total recipes found: {len(all_recipe_links)}")
 
 def sanitize_title_for_url(title):
     
@@ -75,7 +75,7 @@ all_recipe_data = []
 
 
 for recipe_link in all_recipe_links:
-    print(f"\nInspecting recipe: {recipe_link}")
+    # print(f"\nInspecting recipe: {recipe_link}")
     
     driver.get(recipe_link)
     
@@ -97,7 +97,7 @@ for recipe_link in all_recipe_links:
         if matches_image_by_title(img_title, title):
             img_url = img_tag.get('src', '')  
             v += 1
-            print(f"Found image URL: {img_url}")
+            # print(f"Found image URL: {img_url}")
             break
 
     ingredients_section = soup.find('ul', class_='ingredients-list list')
@@ -109,7 +109,7 @@ for recipe_link in all_recipe_links:
 
     method_section = driver.find_elements(By.XPATH, "//h2[text()='Method']")
     if not method_section:
-        print("No method steps found, skipping this recipe.")
+        # print("No method steps found, skipping this recipe.")
         continue 
 
 
@@ -150,11 +150,11 @@ for recipe_link in all_recipe_links:
                 value = item.get_text(strip=True).replace(label, '').strip()
                 nutrition_data[label] = value
         
-            print("Nutritional Values:")
+            # print("Nutritional Values:")
             for key, value in nutrition_data.items():
-                print(f"{key}: {value}")
+                # print(f"{key}: {value}")
     except Exception:
-        print("Nutrition button not found. Skipping...")
+        # print("Nutrition button not found. Skipping...")
 
 
     recipe_data = {
@@ -172,7 +172,7 @@ with open('recipe_data.json', 'w') as json_file:
     json.dump(all_recipe_data, json_file, indent=4)
 
 
-print(f"Processed {k} recipes.")
-print(v)
+# print(f"Processed {k} recipes.")
+# print(v)
 driver.quit()
 
