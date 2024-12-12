@@ -45,11 +45,11 @@ To run SmartBite on your local machine, follow these steps:
     ```
 
 # Team Contributions
-# =======================
-# Bianca Gorgovan:
-# - Created the web scraper that parses recipe and nutritional data into a JSON file.
-# - Developed the calorie recommendation calculator and recipe recommendation algorithm.
-# - Worked on the filtering by ingredient algorithm.
+=======================
+- **Bianca Gorgovan:**
+  - Created the web scraper that parses recipe and nutritional data into a JSON file.
+  - Developed the calorie recommendation calculator and recipe recommendation algorithm.
+  - Worked on the filtering by ingredient algorithm.
 #
 # Teodora Sintea:
 # - Managed the database and ensured that the information retrieved from the scraper was properly stored in SQLite.
