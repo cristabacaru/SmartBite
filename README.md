@@ -73,3 +73,24 @@ To run SmartBite on your local machine, follow these steps:
   - **Challenges and Solutions:**
     - Faced difficulties in ensuring the frontend and backend communicated efficiently, especially with dynamic content. This was solved by using          Flask’s templating engine and AJAX to update parts of the page dynamically.
     - The recipe scraper had issues with fetching data from dynamic web pages. Overcame this by using Selenium in combination with BeautifulSoup for       more reliable data extraction.
+
+# Steps to use the app:
+1. **Log in/ Create account**
+    - If you don’t have an account, click on the Register button and complete the form with your details:
+      - Name, Username, Email, Password, Height, Weight, Gender, Desired weight, Goal, Activity level
+    - Once registered, you can log in with your credentials to access the app.
+  
+2. **Browse the Home Page**
+   - Once logged in, you’ll be taken to the Home Page where all the available recipes are displayed. Browse through the recipes and explore different options based on your preferences.
+
+3. **Filter Based on Ingredients**
+   - If you want to create a recipe using ingredients you already have, you can use the Filter Recipes page. Simply input the ingredients you have on hand, and the app will suggest recipes based    on those ingredients. Instructions for using the filter are provided on this page.
+  
+4. **Check Out Your Personalized Meal Plan**
+   - Based on the personal information you provided during registration (including your goal, desired weight, and activity level), a personalized weekly meal plan will be generated for you.         Visit the Meal Plan page to see your plan, which includes three recipes per day.
+  
+5. **Edit Your Personal Info**
+   - If you need to update any of your information, such as weight, goal, or activity level, you can do so easily on the Edit Profile page.
+  
+6. **Sign Out**
+   - Once you’re done using the app, you can sign out by clicking the Sign Out button in the navigation bar.
