@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3, random
 
 def calculate_bmi(weight, height):
     return weight / (height ** 2)
@@ -44,11 +44,13 @@ def find_recipes_near_calories(target_calories, num_recipes=7):
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
 
-    import random
+    unique_recipes = set()
+    attempts = 0
+    max_attempts = 100  # To prevent infinite loops in case of insufficient unique recipes
 
-    for _ in range(num_recipes):
+    while len(unique_recipes) < num_recipes * 3 and attempts < max_attempts:
+        attempts += 1
         random_nr = random.randint(1, 93)
-        results = []
         query = """
         SELECT r1.recipe_id, r2.recipe_id, r3.recipe_id, 
             (r1.calories + r2.calories + r3.calories) AS total_calories
@@ -60,11 +62,17 @@ def find_recipes_near_calories(target_calories, num_recipes=7):
 
         cursor.execute(query, (random_nr, target_calories, num_recipes))
         rows = cursor.fetchall()
+
         for row in rows:
-            results.append(row[0])
-            results.append(row[1])
-            results.append(row[2])
+            unique_recipes.add(row[0])
+            unique_recipes.add(row[1])
+            unique_recipes.add(row[2])
+
+            # Stop early if we've collected enough unique recipes
+            if len(unique_recipes) >= num_recipes * 3:
+                break
 
     connection.close()
 
-    return results
+    # Return exactly 21 unique recipes if possible
+    return list(unique_recipes)[:num_recipes * 3]

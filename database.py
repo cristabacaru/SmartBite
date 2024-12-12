@@ -1,4 +1,4 @@
-import sqlite3, json
+import sqlite3, json, random
 
 # connection to the database
 connection = sqlite3.connect("database.db")
@@ -39,9 +39,15 @@ cursor.execute("CREATE TABLE IF NOT EXISTS users (\
 # commit the creation of tables
 connection.commit()
 
-with open('recipe_data.json', 'r') as file:
-    recipe_data = json.load(file)
+# extract data from both files and randomise it's order
+with open('recipe_data.json', 'r') as file1, open('br_recipe_data.json', 'r') as file2:
+    recipe_data_1 = json.load(file1)
+    recipe_data_2 = json.load(file2)
 
+recipe_data = recipe_data_1 + recipe_data_2
+random.shuffle(recipe_data)
+
+# put the data in the database
 for recipe in recipe_data:
     if 'kcal' not in recipe['nutrition_data']:
         continue
