@@ -264,19 +264,19 @@ def recipe():
     recipe_data = cursor.fetchone()
     connection.commit()
 
-    # cursor.execute("SELECT r.recipe_id, i.name AS recipe_ingredients\
-    #                 FROM recipes r\
-    #                 WHERE r.recipe_id = ?\
-    #                 JOIN recipe_ingredients ri ON r.recipe_id = ri.recipe_id\
-    #                 JOIN ingredients i ON ri.ingredient_id = i.ingredient_id;", (recipe_id,))
-    # recipe_ingredients = cursor.fetchall()
-    # print(recipe_ingredients)
+    cursor.execute("SELECT i.name AS recipe_ingredient\
+                    FROM recipes r\
+                    JOIN recipe_ingredients ri ON r.recipe_id = ri.recipe_id\
+                    JOIN ingredients i ON ri.ingredient_id = i.ingredient_id\
+                    WHERE r.recipe_id = ?;", (recipe_id,))
+    recipe_ingredients = cursor.fetchall()
+    ingredients = [item[0] for item in recipe_ingredients]
     connection.close()
 
     if not recipe_data:
         return render_template('404.html'), 404  # Show a 404 page if recipe not found
 
-    return render_template('recipe.html', recipe=recipe_data)
+    return render_template('recipe.html', recipe=recipe_data, ingredients=ingredients)
 
 
 if __name__ == '__main__':

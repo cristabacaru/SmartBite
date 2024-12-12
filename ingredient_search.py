@@ -83,11 +83,3 @@ ingredient_list = [
 ]
 
 top_recipes = find_recipes_by_ingredients(ingredient_list)
-
-# print("Top Recipes:")
-# for recipe in top_recipes:
-#     print(f"ID: {recipe['recipe_id']}, Name: {recipe['recipe_name']}")
-#     print(f"Matched Ingredients: {', '.join(recipe['matched_ingredients'])}")
-#     print(f"Missing Ingredients: {', '.join(recipe['missing_ingredients'])}")
-#     print()
-
