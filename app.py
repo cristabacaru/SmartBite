@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from calories_calc_recipes import *
+from ingredient_search import *
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -112,19 +113,57 @@ def home_logged_in():
     
 @app.route('/browse_recipes', methods=['GET', 'POST'])
 def browse_recipes():
-    user_id = session['user_id']
+    tags_list = []
+    final_tags = request.form.get('finalTags')
+    if final_tags:
+        tags_list = final_tags.split(',')
+    
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
+    recipes = find_recipes_by_ingredients(tags_list)
+    rows = []
+    for recipe in recipes:
+        cursor.execute("SELECT * FROM recipes WHERE recipe_id = ?;", (recipe['recipe_id'],))
+        row = cursor.fetchone()
+        row = list(row)
+        row.append(recipe['missing_ingredients'])
+        rows.append(row)
+    connection.close()
 
+    user_id = session['user_id']
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
     user_info = cursor.fetchone()
     connection.commit()
     connection.close()
+
+    # Generate a list of cards
+    all_cards = []
+    for row in rows:
+        card = {
+            'id': row[0],
+            'title': row[1],
+            'description': row[3],
+            'image_url': row[5],  # Use modulo for image recycling
+            'link': '#',
+            'missing_ingredients': row[6]
+        }
+        all_cards.append(card)
+
+    # Pagination logic
+    per_page = 21
+    page = int(request.args.get('page', 1))  # Get the current page, default to 1
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_cards = all_cards[start:end]
+    total_pages = -(-len(all_cards) // per_page)  # Ceiling division for total pages
+
     return render_template(
         'browse_recipes.html',
-        cards=[],
-        current_page=0,
-        total_pages=0,
+        cards=paginated_cards,
+        current_page=page,
+        total_pages=total_pages,
         user_info=user_info
     )
 
@@ -140,7 +179,6 @@ def meal_plan():
     connection.close()
 
     recipe_ids = find_recipes_near_calories(user_info[12])
-    print(recipe_ids)
 
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
@@ -148,7 +186,6 @@ def meal_plan():
     for recipe in recipe_ids:
         cursor.execute(f"SELECT * FROM recipes WHERE recipe_id = ?;", (recipe,))
         rows.append(cursor.fetchone())
-    print(rows)
     connection.commit()
     connection.close()
     # Define weekday names
@@ -230,6 +267,14 @@ def recipe():
     cursor.execute("SELECT * FROM recipes WHERE recipe_id = ?", (recipe_id,))
     recipe_data = cursor.fetchone()
     connection.commit()
+
+    # cursor.execute("SELECT r.recipe_id, i.name AS recipe_ingredients\
+    #                 FROM recipes r\
+    #                 WHERE r.recipe_id = ?\
+    #                 JOIN recipe_ingredients ri ON r.recipe_id = ri.recipe_id\
+    #                 JOIN ingredients i ON ri.ingredient_id = i.ingredient_id;", (recipe_id,))
+    # recipe_ingredients = cursor.fetchall()
+    # print(recipe_ingredients)
     connection.close()
 
     if not recipe_data:

@@ -47,10 +47,10 @@ for recipe in recipe_data:
         continue
     instructions = ""
     for step in recipe['recipe_steps']:
-        instructions = instructions + step + '<br>'
+        instructions = instructions + step + '\n'
     description = ""
     for info in recipe['nutrition_data']:
-        description = description + info + ': ' + recipe['nutrition_data'][info] + '<br>'
+        description = description + info + ': ' + recipe['nutrition_data'][info] + '\n'
     cursor.execute("INSERT OR IGNORE INTO recipes (name, calories, description, instructions, picture)\
                  VALUES (?, ?, ?, ?, ?)", (recipe['recipe_name'], recipe['nutrition_data']['kcal'], description, instructions, recipe['recipe_image_link']))
     connection.commit()

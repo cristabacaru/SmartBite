@@ -68,32 +68,3 @@ def find_recipes_near_calories(target_calories, num_recipes=7):
     connection.close()
 
     return results
-
-# # Example usage:
-# weight = 70  # in kg
-# height = 1.75  # in meters
-# age = 30  # in years
-# gender = 'female'
-# goal = 'weight_gain'
-# activity_level = 1.375  # Lightly active
-# weight_loss_kilos = 5  # weight to lose in kilograms
-
-# # Calculate BMI
-# bmi = calculate_bmi(weight, height)
-# print(f"BMI: {bmi:.2f}")
-
-# # Calculate recommended calorie intake
-# recommended_calories = calculate_calories(weight, height * 100, age, gender, goal, activity_level, weight_loss_kilos)
-# print(f"Recommended Calories for {goal}: {recommended_calories:.0f} kcal/day")
-
-# # Find recipes close to recommended calories
-# recipe_combinations = find_recipes_near_calories(recommended_calories)
-# if recipe_combinations:
-#     print("Recommended Recipes:")
-#     for i, (ids, names, total_calories) in enumerate(recipe_combinations, 1):
-#         print(f"Combination {i}:")
-#         for recipe_id, recipe_name in zip(ids, names):
-#             print(f"  - ID: {recipe_id}, Name: {recipe_name}")
-#         print(f"  Total Calories: {total_calories:.0f} kcal\n")
-# else:
-#     print("No recipes found.")

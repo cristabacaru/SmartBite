@@ -64,8 +64,12 @@ def find_recipes_by_ingredients(ingredient_list):
             "matched_count": len(matched)
         })
 
-    
-    results = sorted(results, key=lambda x: x['matched_count'], reverse=True)[:10]
+    nr = 0
+    for res in results:
+        if res['matched_count'] != 0:
+            nr += 1
+
+    results = sorted(results, key=lambda x: x['matched_count'], reverse=True)[:nr]
 
     connection.close()
 
