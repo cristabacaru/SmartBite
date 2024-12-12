@@ -40,9 +40,12 @@
                     <div class="card h-100">
                         <img src="{{ card.image_url }}" class="card-img-top" alt="{{ card.title }}">
                         <div class="card-body">
-                            <h5 class="card-title">{{ card.title }} missing:{{card.missing_ingredients}}</h5>
+                            <h5 class="card-title" style="font-weight:500">{{ card.title }} <br> 
+                                <span style="font-weight: 300;">Recipe Doesn't Have:</span>
+                                <span style="color: rgb(146, 2, 2);">{{ card.missing_ingredients | join(', ') }}</span>
+                            </h5>
                             <p class="card-text">{{ card.description }}</p>
-                            <a href="{{ card.link }}" class="btn btn-primary" style="background-color: #1b0b5a; border:none;">Go somewhere</a>
+                            <a href="/recipe?id={{ card.id }}" class="btn btn-primary" style="background-color: #1b0b5a; border:none;">View Recipe</a>
                         </div>
                     </div>
                 </div>

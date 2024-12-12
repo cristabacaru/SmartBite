@@ -37,7 +37,7 @@
                 </ul>
             </div>
             <div class="col-md-12">
-                <div style="color: white;">{{ recipe[4].replace('\n', '<br>')|safe }}</div>
+                <div style="color: white;">{{ recipe[4].replace('\n', '<br>').replace('step', 'Step') | safe }}</div>
             </div>
             
         </div>
