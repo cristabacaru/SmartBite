@@ -31,8 +31,21 @@
                     {% endfor %}
                 </ul>
             </div>
+            <div class="col-md-3">
+                <label for="list-items" class="h3" style="color:white; text-shadow: 1px 1px 1px rgba(2, 6, 64, 0.854);">Nutrition:</label>
+                <ul class="list-group" style="box-shadow:5px 5px 5px rgba(2, 6, 64, 0.854);">
+                    {% for item in recipe[3].split('\n') %}
+                        <li class="list-group-item">{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
             <div class="col-md-12">
-                <div style="color: white;">{{ recipe[4].replace('\n', '<br>').replace('step', 'Step') | safe }}</div>
+                <label for="list-items" class="h3" style="color:white; text-shadow: 1px 1px 1px rgba(2, 6, 64, 0.854);">Method:</label>
+                <ul class="list-group" style="box-shadow:5px 5px 5px rgba(2, 6, 64, 0.854);">
+                    {% for step in recipe[4].split('\n') %}
+                        <li class="list-group-item"> {{ step.replace('step', '<span style="color: red; font-weight: bold;">STEP</span>') | safe }}</li>
+                    {% endfor %}
+                </ul>
             </div>
             
         </div>
